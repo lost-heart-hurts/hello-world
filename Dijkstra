@@ -1,0 +1,21 @@
+priority_queue<pair<int, int> >q;  
+//优先队列，默认为大根堆，pair先比较first，若相同再比较second
+void dijkstra(int start)
+{
+		    memset(dis, 0x3f, sizeof(dis));
+	    dis[start] = 0;
+		    q.push(make_pair(0, start));
+	    while (!q.empty()) {
+		        int x = q.top().second; q.pop();
+		        if (vis[x]) continue;
+		        vis[x] = true;
+		        for (int i = head[x]; i; i = nex[i]) {
+			            int y = ver[i], z = w[i];
+			            if (dis[y] > dis[x] + z) {
+				                dis[y] = dis[x] + z;
+				                q.push(make_pair(-dis[y], y));
+                //因为默认为大根堆，所以距离变负数即可
+			            }
+		        }
+	    }
+}
